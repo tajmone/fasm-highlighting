@@ -5,7 +5,7 @@
 *                                                                            *
 *                            Language Definition                             *
 *                                                                            *
-*                             v1.0 - 2017/03/14                              *
+*                             v1.1 - 2017/03/14                              *
 *                                                                            *
 ******************************************************************************
 Flat assembler v1.71.60 language definition for Highlight v3.35.
@@ -15,7 +15,7 @@ Written by Tristano Ajmone:
     <tajmone@gmail.com>
     https://github.com/tajmone
 
-Released into the public domain according to the Unlicense licsense:
+Released into the public domain according to the Unlicense license:
     http://unlicense.org
 ------------------------------------------------------------------------------
 Project repository:
@@ -80,25 +80,25 @@ Digits=[[ (?x)
         # ============ HEX ============
         # C (0xFF) & Pascal ($FF) style:
 
-          (?:(?<!\$)\b0x|\b0X|(?<!\w|\$)\$)[0-9a-fA-F]+\b(?!\$)
+          (?:(?<!\$)\b0x|\b0X|(?<!\w|\$)\$)[0-9a-fA-F_']+\b(?!\$)
 
         # h syntax (0FFh) -- req. leading 0:
 
-        | \b0[0-9a-fA-F]+[hH]\b
+        | \b0[0-9a-fA-F_']+[hH]\b
 
         # ============ OCTAL ============
-        | \b[0-7]+[oOqQ]\b         # 377o / 377q                        [See: #4]
+        | \b[0-7_']+[oOqQ]\b         # 377o / 377q                        [See: #4]
 
         # ============ BINARY ============
-        | \b[01]+[bB]\b
+        | \b[01_']+[bB]\b
 
         # ============ FLOAT ============
-        | \b[0-9]+f\b              # 1f  syntax
-        | \b[0-9]+\.[0-9]+\b       # 1E0 syntax (scientific notation)
-        | \b[0-9]+[eE][0-9]+\b     # 1.0 syntax
+        | \b[0-9_']+f\b              # 1f  syntax
+        | \b[0-9_']+\.[0-9_']+\b       # 1E0 syntax (scientific notation)
+        | \b[0-9_']+[eE][0-9_']+\b     # 1.0 syntax
 
         # ============ DECIMAL ============
-        | (?<!\$)\b[0-9]+\b(?!\$)
+        | (?<!\$)\b[0-9_']+[dD]?\b(?!\$)
        ]]
 
 Operators=[=[[+-/*=<>()[\]{}:,|&~#`;\\]]=]
@@ -602,4 +602,10 @@ v1.0 (2017/03/14)
   -- First release.
   -- Flat Assembler v1.71.60 (2017/03/04).
   -- Highlight v3.35 (2017/02/28).
+v1.1 (2017/03/14)
+  -- Implemented some missing features for numbers (thanks to @bitRAKE for
+     pointing them out):
+     -- DECIMAL NUMBERS FIX: implemented the (optional) "d" suffix.
+     -- ALL NUMBER TYPES FIX: implemented single quote (') and underscore (_) for
+        splitting long numbers (eg: 1'000'000 or 1_000_000).
 ]]
